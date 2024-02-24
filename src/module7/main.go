@@ -23,7 +23,7 @@ func main() {
 	fmt.Printf("\n%+v %+v %+v =\n", x, operation, y)
 
 	// Затем создать экземпляр структуры calculator из пакета calc и вызвать метод Calculate, передав ему полученные из консоли значения.
-	c := calc.NewCalulator()
+	c := calc.NewCalculator()
 	result := c.Calculate(x, y, operation)
 
 	// Полученный из метода Calculate результат нужно распечатать в консоль.

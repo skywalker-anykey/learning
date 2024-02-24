@@ -8,7 +8,7 @@ type calculator struct {
 }
 
 // NewCalculator функция-конструктор для создания экземпляра структуры calculator
-func NewCalulator() calculator {
+func NewCalculator() calculator {
 	return calculator{}
 }
 
