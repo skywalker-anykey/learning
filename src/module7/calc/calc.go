@@ -7,8 +7,8 @@ import (
 type calculator struct {
 }
 
-// NewCalculator функция-конструктор для создания экземпляра структуры calculator
-func NewCalulator() calculator {
+// New функция-конструктор для создания экземпляра структуры calculator
+func New() calculator {
 	return calculator{}
 }
 
