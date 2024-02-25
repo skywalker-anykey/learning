@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-
-	"module6/calc"
 )
 
 func main() {
@@ -12,8 +10,6 @@ func main() {
 	fmt.Scanln(&x)
 	fmt.Scanln(&operation)
 	fmt.Scanln(&y)
-
-	calc.Calc()
 
 	switch operation {
 	case "+":
