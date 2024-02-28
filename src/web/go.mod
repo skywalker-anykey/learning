@@ -2,4 +2,4 @@ module web
 
 go 1.22.0
 
-require github.com/russross/blackfriday v1.6.0
+require github.com/julienschmidt/httprouter v1.3.0
