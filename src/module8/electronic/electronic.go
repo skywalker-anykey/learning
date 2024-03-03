@@ -36,8 +36,8 @@ func (a *applePhone) OS() string {
 	return a.os
 }
 
-func NewApplePhone(model, os string) *applePhone {
-	return &applePhone{model: model, os: os}
+func NewApplePhone(model, os string) applePhone {
+	return applePhone{model: model, os: os}
 }
 
 // Добавьте в пакет electronic структуру androidPhone. Сделайте так, чтобы она также реализовывала интерфейсы Phone и Smartphone.

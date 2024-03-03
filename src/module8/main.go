@@ -20,10 +20,13 @@ func printCharacteristics(p electronic.Phone) {
 	fmt.Println("Brand:\t", p.Brand())
 	fmt.Println("Model:\t", p.Model())
 	fmt.Println("Type:\t", p.Type())
-	switch p.Type() {
-	case "station":
-		fmt.Println("ButtonsCount:\t", p.ButtonsCount())
-	case "smartphone":
+	switch p := p.(type) {
+	case electronic.Smartphone:
 		fmt.Println("OS:\t", p.OS())
+	case electronic.StationPhone:
+		fmt.Println("ButtonsCount:\t", p.ButtonsCount())
+	default:
+		fmt.Println("непредвиденный тип")
 	}
+	fmt.Println()
 }
