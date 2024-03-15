@@ -6,8 +6,8 @@ func main() {
 	var f, num int
 	f, num = 1, 5
 
-	for i := 1; i <= num; i++ {
-		f *= i
+	for ; 0 < num; num-- {
+		f *= num
 	}
 	fmt.Println(f)
 }
