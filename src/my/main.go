@@ -3,11 +3,15 @@ package main
 import "fmt"
 
 func main() {
-	var f, num int
-	f, num = 1, 5
+	var num int64
+	num = 7
 
-	for ; 0 < num; num-- {
-		f *= num
+	fmt.Println(FactRecursive(num))
+}
+
+func FactRecursive(n int64) int64 {
+	if n < 2 {
+		return 1
 	}
-	fmt.Println(f)
+	return n * FactRecursive(n-1)
 }
