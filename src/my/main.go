@@ -3,15 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	var num int64
-	num = 7
+	var numbers = []int{1, 2, 3}
+	var index int
 
-	fmt.Println(FactRecursive(num))
-}
+	fmt.Scan(&index)
 
-func FactRecursive(n int64) int64 {
-	if n < 2 {
-		return 1
+	if index >= len(numbers) || index < 0 {
+		fmt.Println("prevented!")
+	} else {
+		fmt.Println(numbers[index])
 	}
-	return n * FactRecursive(n-1)
 }
