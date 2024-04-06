@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 func init() {
@@ -9,51 +10,40 @@ func init() {
 }
 
 func main() {
-	ar := make([]int, 10)
-	//for i := range ar {
-	//	ar[i] = rand.Intn(200) - 100 // ограничиваем случайное значение от [-100;100]
-	//}
-	ar = []int{13, 6, 11, -5, 9, 0}
+	ar := make([]int, 50)
+	for i := range ar {
+		ar[i] = rand.Intn(200) - 100 // ограничиваем случайное значение от [-100;100]
+	}
 
 	fmt.Println(ar)
 	doubleSelectionSort(ar)
 	fmt.Println(ar)
 }
 func doubleSelectionSort(ar []int) {
-	first := 0
-	last := len(ar) - 1
-	j := 0
+	minPos := 0
+	maxPos := len(ar) - 1
 
-	for first+j < last-j {
-		minIndex := first + j
-		minFlag, maxFlag := false, false
-		maxIndex := last - j
-
-		for i := first + j; i < last-j+1; i++ {
+	for minPos <= maxPos {
+		minIndex := minPos
+		maxIndex := maxPos
+		for i := minPos; i <= maxPos; i++ {
 			if ar[i] < ar[minIndex] {
 				minIndex = i
-				minFlag = true
 			}
-
 			if ar[i] > ar[maxIndex] {
 				maxIndex = i
-				maxFlag = true
 			}
 		}
-		switch {
-		//TODO неразобрался с двойным совпадением
-		case maxFlag && minFlag:
-			ar[first+j], ar[minIndex] = ar[minIndex], ar[first+j]
-			ar[minIndex], ar[last-j] = ar[last-j], ar[minIndex]
-		case minFlag:
-			ar[first+j], ar[minIndex] = ar[minIndex], ar[first+j]
-		case maxFlag:
-			ar[last-j], ar[maxIndex] = ar[maxIndex], ar[last-j]
-		}
-		fmt.Println(ar)
-		j++
-	}
 
+		ar[minPos], ar[minIndex] = ar[minIndex], ar[minPos]
+		if maxIndex == minPos {
+			maxIndex = minIndex
+		}
+		ar[maxPos], ar[maxIndex] = ar[maxIndex], ar[maxPos]
+
+		minPos++
+		maxPos--
+	}
 }
 
 func selectionSort(ar []int) {
