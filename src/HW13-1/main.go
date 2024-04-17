@@ -2,6 +2,7 @@ package main
 
 import (
 	"HW13-1/bintree"
+	"HW13-1/graph"
 	"fmt"
 )
 
@@ -37,8 +38,30 @@ func main_bintree() {
 
 func main_directedgraph() {
 	fmt.Println("ориентированный граф")
+	// Структура: ориентированный граф
+	gph := new(graph.Graph)
+	gph.Init(6)
+	gph.AddDirectedEdge(5, 2, 1)
+	gph.AddDirectedEdge(5, 0, 1)
+	gph.AddDirectedEdge(4, 0, 1)
+	gph.AddDirectedEdge(4, 1, 1)
+	gph.AddDirectedEdge(2, 3, 1)
+	gph.AddDirectedEdge(3, 1, 1)
+	gph.Print()
+	// Функции: определения кратчайшего пути между любой парой вершин
+
 }
 
 func main_notdirectedgraph() {
 	fmt.Println("неориентированный граф")
+	// Структура: неориентированный граф.
+	gph := new(graph.Graph)
+	gph.Init(4)
+	gph.AddUndirectedEdge(0, 1, 1)
+	gph.AddUndirectedEdge(0, 2, 1)
+	gph.AddUndirectedEdge(1, 2, 1)
+	gph.AddUndirectedEdge(2, 3, 1)
+	gph.Print()
+	// Функции: поиск в ширину
+
 }
