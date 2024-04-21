@@ -1,3 +1,4 @@
 bin/*.exe*
 pkg/*
 /.idea/*
+src/tmp/*
