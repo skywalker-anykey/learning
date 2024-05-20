@@ -1,6 +1,11 @@
 package bank
 
-import "errors"
+import (
+	"errors"
+	"sync"
+)
+
+var m sync.RWMutex
 
 type Client struct {
 	amount int
@@ -19,18 +24,24 @@ type BankClient interface {
 }
 
 func (c *Client) Deposit(a int) {
+	m.Lock()
 	c.amount += a
+	m.Unlock()
 }
 
 func (c *Client) Withdrawal(a int) error {
 	if c.amount < a {
 		return errors.New("баланс недостаточен. операция не выполнена")
 	}
+	m.Lock()
 	c.amount -= a
+	m.Unlock()
 	return nil
 }
 
 func (c *Client) Balance() int {
+	m.RLock()
+	defer m.RUnlock()
 	return c.amount
 }
 

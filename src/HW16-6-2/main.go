@@ -4,12 +4,10 @@ import (
 	"HW16-6-2/bank"
 	"fmt"
 	"math/rand/v2"
-	"sync"
 	"time"
 )
 
 func main() {
-	var m sync.RWMutex
 	client := bank.New()
 
 	//Используя этот клиент, создайте консольное приложение, которое:
@@ -18,9 +16,7 @@ func main() {
 		go func() {
 			for {
 				cur := rand.IntN(10) + 1
-				m.Lock()
 				client.Deposit(cur)
-				m.Unlock()
 				time.Sleep(time.Microsecond * time.Duration(rand.IntN(500)+500))
 			}
 		}()
@@ -32,9 +28,7 @@ func main() {
 		go func() {
 			for {
 				cur := rand.IntN(5) + 1
-				m.Lock()
 				err := client.Withdrawal(cur)
-				m.Unlock()
 				if err != nil {
 					fmt.Println(err)
 				}
@@ -57,20 +51,14 @@ func main() {
 	for {
 		switch ReadCMD() {
 		case "deposit":
-			m.Lock()
 			client.Deposit(ReadAmount())
-			m.Unlock()
 		case "withdraw":
-			m.Lock()
 			err := client.Withdrawal(ReadAmount())
-			m.Unlock()
 			if err != nil {
 				fmt.Println(err)
 			}
 		case "balance":
-			m.RLock()
 			fmt.Println(client.Balance())
-			m.RUnlock()
 		case "exit":
 			return
 		default:
