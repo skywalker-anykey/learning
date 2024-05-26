@@ -6,7 +6,7 @@ import (
 )
 
 const step int64 = 1
-const interationAmount int = 1000
+const interationAmount int64 = 1000
 
 func main() {
 	var counter int64 = 0
@@ -17,12 +17,14 @@ func main() {
 		go func() {
 			for {
 				c.L.Lock()
-				if counter == int64(interationAmount) {
-					c.Signal()
-				} else {
+				if counter < interationAmount {
 					counter = counter + step
+					c.L.Unlock()
+					continue
 				}
 				c.L.Unlock()
+				c.Signal()
+				break
 			}
 		}()
 	}
