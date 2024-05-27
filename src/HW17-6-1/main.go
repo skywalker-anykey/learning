@@ -3,26 +3,29 @@ package main
 import (
 	"fmt"
 	"sync"
+	"sync/atomic"
 )
 
-func receive(ch chan int, count *int, wg *sync.WaitGroup) {
+func receive(ch chan int, count *int32, wg *sync.WaitGroup) {
 	defer wg.Done()
 	wg.Add(1)
-	for range ch {
-		*count++
+	for _, ok := <-ch; ok; _, ok = <-ch {
+		atomic.AddInt32(count, 1)
 	}
+	return
 }
 
 func main() {
 	// Количество отправляемых сообщений в каналы
-	const countSend = 100
+	const countSend = 1000
 
-	var countC1, countC2 int
+	var countC1, countC2 int32
 	wg := sync.WaitGroup{}
 
 	c1 := make(chan int)
 	c2 := make(chan int)
 
+	// Вероятность "2 к 1" получаем за счет дополнительной горутины, обрабатывающей канал c1
 	go receive(c1, &countC1, &wg)
 	go receive(c1, &countC1, &wg)
 	go receive(c2, &countC2, &wg)
@@ -30,8 +33,9 @@ func main() {
 	for i := 0; i < countSend; i++ {
 		select {
 		case c1 <- i:
-		case c1 <- i:
+			//fmt.Println("c1 <-", i)
 		case c2 <- i:
+			//fmt.Println("c2 <-", i)
 		}
 	}
 	close(c1)
