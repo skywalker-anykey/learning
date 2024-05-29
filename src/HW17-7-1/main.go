@@ -9,7 +9,9 @@ const (
 	// numGoroutines - Количество используемых горутин
 	numGoroutines = 10
 	// goal - Цель конечного значения счетчика
-	goal = 1000
+	goal = 2000
+	// step - Шаг итерации
+	step = 1
 )
 
 type Counter struct {
@@ -48,10 +50,7 @@ func (c *Counter) Start() {
 
 func (c *Counter) Add(step int) bool {
 	c.ch <- step
-	if <-c.goalCh == true {
-		return true
-	}
-	return false
+	return <-c.goalCh
 }
 
 func (c *Counter) Value() int {
@@ -74,7 +73,7 @@ func main() {
 		go func() {
 			defer wg.Done()
 			for {
-				isGoal := c.Add(1)
+				isGoal := c.Add(step)
 				if isGoal {
 					return
 				}
