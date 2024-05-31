@@ -1,9 +1,9 @@
 package main
 
 import (
+	"07/7/1/calc"
 	"fmt"
 	"log"
-	"module7/calc"
 )
 
 func main() {

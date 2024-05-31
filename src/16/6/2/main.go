@@ -1,7 +1,7 @@
 package main
 
 import (
-	"HW16-6-2/bank"
+	"16/6/2/bank"
 	"fmt"
 	"math/rand/v2"
 	"time"

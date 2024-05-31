@@ -1,8 +1,8 @@
 package main
 
 import (
+	"08/8/2/hw8_8_2"
 	"fmt"
-	"module8-2/hw8-8-2"
 )
 
 func main() {

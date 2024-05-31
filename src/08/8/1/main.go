@@ -1,8 +1,8 @@
 package main
 
 import (
+	"08/8/1/electronic"
 	"fmt"
-	"module8/electronic"
 )
 
 func main() {
