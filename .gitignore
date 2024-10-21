@@ -1,4 +1,4 @@
 bin/*.exe*
 pkg/*
 /.idea/*
-src/tmp/*
+src/statistics/*
