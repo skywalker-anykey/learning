@@ -28,7 +28,7 @@ import (
 4-2=2
 
 Пожелания к программе:
- -[X] Использовать методы и структуры пакетов ioutils и regexp.
+ -[X] Использовать методы и структуры пакетов 'io/ioutil' и 'regexp'.
  -[X] Программа должна принимать на вход 2 аргумента: имя входного файла и имя файла для вывода результатов.
  -[X] Если не найден вывод, создать.
  -[X] Если файл вывода существует, очистить перед записью новых результатов.
@@ -37,7 +37,7 @@ import (
 
 func main() {
 	// -[X] Программа должна принимать на вход 2 аргумента: имя входного файла и имя файла для вывода результатов.
-	// Обработка аргументов, если аргументы не указаны используються по заданые умолчанию.
+	// Обработка аргументов, если аргументы не указаны используются заданные по умолчанию.
 	// --help для получения опций
 	inFile := flag.String("in", "./in.txt", "Путь к входящему файлу")
 	outFile := flag.String("out", "./out.txt", "Путь к выходящему файлу")
@@ -50,47 +50,50 @@ func main() {
 	// -[X] Если не найден вывод, создать.
 	fOut, err := os.OpenFile(*outFile, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0777)
 	defer func(fOut *os.File) {
-		_ = fOut.Close()
+		err := fOut.Close()
+		if err != nil {
+			log.Println(err)
+		}
 	}(fOut)
 
 	// -[X] Использовать буферизированную запись результатов.
 	writer := bufio.NewWriter(fOut)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	fIn, err := ioutil.ReadFile(*inFile)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
-	re := regexp.MustCompile(`([0-9]+)([+\-*/])([0-9]+)=?`)
+	re := regexp.MustCompile(`([0-9]+)\s*([+\-*/])\s*([0-9]+)\s*=?`)
 	find := re.FindAllStringSubmatch(string(fIn), -1)
 
 	for _, s := range find {
 		// Подготовка записи файла в буфер
 		_, err = writer.Write([]byte(calc(s[1], s[2], s[3])))
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 	}
 
 	// Запись в файл
 	err = writer.Flush()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 
 func calc(arg1, operation, arg2 string) string {
 	a, err := strconv.Atoi(arg1)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	b, err := strconv.Atoi(arg2)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	switch operation {
